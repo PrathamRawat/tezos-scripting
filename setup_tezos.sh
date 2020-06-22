@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Delete old tezos repository
 if [ -d "tezos" ]; then
