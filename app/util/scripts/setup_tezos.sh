@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ..
+
 # Delete old tezos repository
 if [ -d "tezos" ]; then
   echo "Removing Tezos"
@@ -11,7 +13,7 @@ fi
 git clone https://gitlab.com/tezos/tezos.git
 cd tezos
 git checkout latest-release
-opam init --bare
+opam init --bare -a
 
 # Create compiler version for ocaml
 opam switch create tezos 4.09.1

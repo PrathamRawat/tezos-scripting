@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nautilus Core</title>
+</head>
+<body>
+    <h1>Welcome to Nautilus Core!</h1>
+    <img src="../static/img/squid.png">
+    {% if node_not_started %}
+
+        <h4>Start a Node!</h4>
+
+        <form action="/start_node" method="get">
+            What OS are you on? (yeah i could just do this with ajax and js but since I have a form anyways why not ask) <br>
+            <input type="radio" value="macOS" name="os"> macOS <br>
+            <input type="radio" value="linux" name="os"> linux <br>
+            <input type="radio" value="windows" name="os" disabled> <strike>windows</strike> <br>
+            <br>
+
+            Network: <br>
+            <input type="radio" value="mainnet" name="network"> mainnet <br>
+            <input type="radio" value="carthagenet" name="network"> carthagenet <br>
+            <br>
+
+            <input type="checkbox" value="devmode" name="devmode"> install developer dependencies? <br>
+            <br>
+
+            <button type="submit"> Submit </button>
+        </form>
+    {% else %}
+
+
+
+    {% endif %}
+</body>
+</html>

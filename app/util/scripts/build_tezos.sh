@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ..
+
 cd tezos
 
 if [ "$1" == "-d" ]; then
