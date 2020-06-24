@@ -5,41 +5,19 @@
     <title>Nautilus Core</title>
 </head>
 <body>
-    <h1>Welcome to Nautilus Core!</h1>
-    {% if node_not_started %}
-
+    <center><h1>Welcome to Nautilus Core!</h1></center>
+    {% if not nodes %}
         <img src="../static/img/squid.png">
 
-        <h4>Start a Node!</h4>
-
-        <form action="/start_node" method="get">
-            What OS are you on? (yeah i could just do this with ajax and js but since I have a form anyways why not ask) <br>
-            <input type="radio" value="macOS" name="os"> macOS <br>
-            <input type="radio" value="linux" name="os"> linux <br>
-            <input type="radio" value="windows" name="os" disabled> <strike>windows</strike> <br>
-            <br>
-
-            Network: <br>
-            <input type="radio" value="mainnet" name="network"> mainnet <br>
-            <input type="radio" value="carthagenet" name="network"> carthagenet <br>
-            <br>
-
-            <input type="checkbox" value="devmode" name="devmode"> install developer dependencies? <br>
-            <br>
-
-            <input type="checkbox" value="privatemode" name="privatemode"> run in private mode? <br>
-            <br>
-
-            <button type="submit"> Submit </button>
-        </form>
+        <h4>What are you waiting for... <a href="/node_setup">start a node now</a>!</h4>
     {% else %}
-
-        <img src="../static/img/squid-happy.jpeg">
-
-        <h4>Your node is up!</h4>
-
-        <a href="/rpc">RPC Query Page</a>
-
+        {% for node in nodes %}
+            <div>
+                <a href="/node?name={{node['name']}}"></a>
+            </div>
+            <br>
+            <br>
+        {% endfor %}
     {% endif %}
 </body>
 </html>
