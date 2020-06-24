@@ -6,8 +6,9 @@
 </head>
 <body>
     <h1>Welcome to Nautilus Core!</h1>
-    <img src="../static/img/squid.png">
     {% if node_not_started %}
+
+        <img src="../static/img/squid.png">
 
         <h4>Start a Node!</h4>
 
@@ -26,11 +27,18 @@
             <input type="checkbox" value="devmode" name="devmode"> install developer dependencies? <br>
             <br>
 
+            <input type="checkbox" value="privatemode" name="privatemode"> run in private mode? <br>
+            <br>
+
             <button type="submit"> Submit </button>
         </form>
     {% else %}
 
+        <img src="../static/img/squid-happy.jpeg">
 
+        <h4>Your node is up!</h4>
+
+        <a href="/rpc">RPC Query Page</a>
 
     {% endif %}
 </body>

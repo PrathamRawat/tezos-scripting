@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd ..
-
-cd tezos
+cd util/tezos
 
 if [ "$1" == "-d" ]; then
     echo "Building Developer Mode"

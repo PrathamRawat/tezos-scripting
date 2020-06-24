@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ..
+cd util
 
 # Delete old tezos repository
 if [ -d "tezos" ]; then
@@ -24,4 +24,4 @@ opam install depext
 opam depext tezos
 
 # Install binaries
-opam install tezos
+opam install tezos -y
