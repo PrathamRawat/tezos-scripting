@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [ "$1" == "-l" ]; then
+#if [ "$1" == "-l" ]; then
     # LINUX INSTALLATION
 
     # Opam installation
@@ -14,18 +14,18 @@ if [ "$1" == "-l" ]; then
     rustup toolchain install 1.39.0
     rustup default 1.39.0
     source $HOME/.cargo/env
-else
-    # MACOS INSTALLATION
-
-    # Install macOS homebrew package manager
-    yes "" | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-    # Install macOS developer tools
-    xcode-select --install
-
-    # Install tezos package dependencies
-    yes "" | brew install hidapi libev
-    yes "" | brew install gpatch
-    yes "" | brew install opam
-    source $HOME/.cargo/env
-fi
+#else
+#    # MACOS INSTALLATION
+#
+#    # Install macOS homebrew package manager
+#    yes "" | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+#
+#    # Install macOS developer tools
+#    xcode-select --install
+#
+#    # Install tezos package dependencies
+#    yes "" | brew install hidapi libev
+#    yes "" | brew install gpatch
+#    yes "" | brew install opam
+#    source $HOME/.cargo/env
+#fi
