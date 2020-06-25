@@ -80,9 +80,9 @@ def stop_node():
 @app.route("/restart_node", methods=['GET'])
 def restart_node():
     name = str(request.args.get("name"))
-    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
+    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(nodes[name]["network"]) + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + str(name))
     nodes[name]['status'] = "running"
-    return redirect(url_for("node_page"))
+    return redirect("/node?name=" + name)
 
 
 @app.route("/node", methods=["GET"])
