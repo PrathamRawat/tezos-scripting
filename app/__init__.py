@@ -37,10 +37,10 @@ def node_start_page():
     # Store data for this network
     global port_counter
     nodes[name] = dict()
-    nodes[name]["name"] = name
+    nodes[name]["name"] = str(name)
     nodes[name]["rpc_port"] = port_counter
     nodes[name]["exposition_port"] = port_counter + 1
-    nodes[name]["network"] = request.args.get("network")
+    nodes[name]["network"] = str(request.args.get("network"))
     nodes[name]["status"] = "starting"
     port_counter += 2
 
