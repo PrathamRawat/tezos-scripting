@@ -62,10 +62,17 @@ def node_start_page():
         os.environ['node_setup'] = str(True)
 
     # Start Node
-    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network"))
+    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
     nodes[name]["status"] = "running"
 
     return redirect(url_for("start_page"))
+
+
+@app.route("/stop_node", methods=["GET"])
+def stop_node():
+    os.system(SCRIPT_FILE_PATH + 'stop_node.sh ' + request.args.get('name'))
+    nodes[request.args.get("name")]['status'] = "stopped"
+    return render_template("node.html", node_data=nodes[request.args.get('name')])
 
 
 @app.route("/node", methods=["GET"])
@@ -75,8 +82,7 @@ def node_page():
 
 @app.route("/rpc", methods=['GET'])
 def node_rpc_page():
-
-    return render_template("rpc.html")
+    return render_template("rpc.html", node_data=nodes[request.args.get("name")])
 
 
 if __name__ == "__main__":

@@ -1,16 +1,14 @@
 #!/bin/bash
 
-echo $(pwd)
-
 cd util/tezos
 
 ./tezos-node config reset
 
-./tezos-node config init --data-dir ../tezos-nodes/tezos-"$1" --network "$1"
+./tezos-node config init --data-dir ../tezos-nodes/data/"$4" --network "$1" --config-file ../tezos-nodes/config/"$4".json
 
-./tezos-node config update --data-dir ../tezos-nodes/tezos-"$1" --network "$1" --cors-header='content-type' --cors-origin='*'
+./tezos-node config update --data-dir ../tezos-nodes/data/"$4" --network "$1" --config-file ../tezos-nodes/config/"$4".json --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --listen-addr 127.0.0.1:"$3"
 
-./tezos-node identity generate --data-dir ../tezos-nodes/tezos-"$1"
+./tezos-node identity generate --data-dir ../tezos-nodes/data/"$4" --config-file ../tezos-nodes/config/"$4".json
 
-screen -dm -S "tezos-node" ./tezos-node run --data-dir ../tezos-nodes/tezos-"$1" --network "$1" --rpc-addr 127.0.0.1
+screen -dm -S "$4" ./tezos-node run --data-dir ../tezos-nodes/"$4" --config-file ../tezos-nodes/config/"$4".json --network "$1" --rpc-addr 127.0.0.1:"$2" --listen-addr 127.0.0.1:"$3"
 

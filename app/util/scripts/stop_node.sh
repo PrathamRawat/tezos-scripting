@@ -1,3 +1,3 @@
 #!/bin/bash
 
-screen -XS tezos-node quit
+screen -XS "$1" quit
