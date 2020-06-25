@@ -13,12 +13,12 @@
     {% else %}
         {% for node in nodes %}
             <div>
-                <a href="/node?name={{node['name']}}"></a>
+                <a href="/node?name={{ node }}">Node "{{ node }}"</a>
             </div>
             <br>
             <br>
         {% endfor %}
-        Start a new node: <a href="/node_setup">
+    Start a new node <a href="/node_setup">here</a>!
     {% endif %}
 </body>
 </html>
