@@ -5,7 +5,7 @@
     <title>Nautilus Cloud</title>
 </head>
 <body>
-    <h1>RPC Querying</h1>
+    <h1>RPC Querying for Node "{{ node['name'] }}"</h1>
     <img src="../static/img/squid_looking.jpg" width="750">
     <br>
     Visiting this <a href="https://tezos.gitlab.io/api/rpc.html#rpcs-full-description">link</a> for information about RPC endpoints
@@ -29,7 +29,7 @@
 
     submitButton.addEventListener("click", function(e) {
         let request = new XMLHttpRequest();
-        request.open("GET", "http://localhost:8732" + response.innerText, false);
+        request.open("GET", "http://localhost:{{ node['rpc_port'] }}" + response.innerText, false);
         request.send(null);
         response.innerText = request.responseText
     });
