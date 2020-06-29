@@ -14,11 +14,17 @@ pip3 install flask
 
 pip3 install psutil
 
-#DEPENDENCIES FOR CONSEIL
+cd app
 
-sudo apt-get install git
+./util/scripts/install_packages.sh
+
+./util/scripts/setup_tezos.sh
+
+./util/scripts/build_tezos.sh
 
 cd util
+
+sudo apt-get install git
 
 git clone https://github.com/Cryptonomic/Conseil.git
 
@@ -29,21 +35,3 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 
 sudo apt-get install postgres
-
-sudo -u -i postgres
-
-dropdb conseil
-
-createdb conseil
-
-psql conseil -f conseil/sql/conseil.sql
-
-cd app
-
-./util/scripts/install_packages.sh
-
-./util/scripts/setup_tezos.sh
-
-./util/scripts/build_tezos.sh
-
-./util/scripts/install_conseil.sh
