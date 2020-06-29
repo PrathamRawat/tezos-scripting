@@ -62,8 +62,8 @@ def node_start_page():
 
     # Store node process statistics
     nodes[name]["status"] = "running"
-    nodes[name]["pid"] = os.environ["node_pid"]
-    nodes[name]["process"] = psutil.Process()
+    # nodes[name]["pid"] = os.environ["node_pid"]
+    # nodes[name]["process"] = psutil.Process()
 
     print(nodes)
 
