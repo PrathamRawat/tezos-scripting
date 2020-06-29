@@ -42,3 +42,5 @@ sudo apt-get update
 # Install the latest version of PostgreSQL.
 # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
 sudo apt-get install postgresql
+
+sudo pg_ctlcluster 12 main start
