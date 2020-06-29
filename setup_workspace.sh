@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DEPENDENCIES FOR NODE
+
 sudo apt-get install curl
 
 sudo apt-get install python3
@@ -12,6 +14,30 @@ pip3 install flask
 
 pip3 install psutil
 
+#DEPENDENCIES FOR CONSEIL
+
+sudo apt-get install git
+
+cd util
+
+git clone https://github.com/Cryptonomic/Conseil.git
+
+sudo apt-get install docker.io
+
+sudo groupadd docker
+
+sudo usermod -aG docker $USER
+
+sudo apt-get install postgres
+
+sudo -u -i postgres
+
+dropdb conseil
+
+createdb conseil
+
+psql conseil -f conseil/sql/conseil.sql
+
 cd app
 
 ./util/scripts/install_packages.sh
@@ -20,3 +46,4 @@ cd app
 
 ./util/scripts/build_tezos.sh
 
+./util/scripts/install_conseil.sh

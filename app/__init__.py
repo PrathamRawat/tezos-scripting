@@ -46,16 +46,19 @@ def node_start_page():
     nodes[name]["name"] = str(name)
     nodes[name]["rpc_port"] = port_counter
     nodes[name]["exposition_port"] = port_counter + 1
+    nodes[name]["conseil_port"] = port_counter + 2
     nodes[name]["network"] = str(request.args.get("network"))
     nodes[name]["status"] = "starting"
-    port_counter += 2
+    port_counter += 3
 
     # Start Node
     if request.arg.get("new"):
         os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
+        os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
     else:
-        os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(
-            nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
+        os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
+
+    os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
 
     # Store node process statistics
     nodes[name]["status"] = "running"
