@@ -73,6 +73,7 @@ def node_start_page():
 @app.route("/stop_node", methods=["GET"])
 def stop_node():
     os.system(SCRIPT_FILE_PATH + 'stop_node.sh ' + request.args.get('name'))
+    os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get("name"))
     nodes[request.args.get("name")]['status'] = "stopped"
     return render_template("node.html", node=nodes[request.args.get('name')])
 
@@ -81,6 +82,7 @@ def stop_node():
 def restart_node():
     name = str(request.args.get("name"))
     os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(nodes[name]["network"]) + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + str(name))
+    os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
     nodes[name]['status'] = "running"
     return redirect("/node?name=" + name)
 

@@ -22,11 +22,7 @@ cd app
 
 ./util/scripts/build_tezos.sh
 
-cd util
-
 sudo apt-get install git
-
-git clone https://github.com/Cryptonomic/Conseil.git
 
 sudo apt-get install docker.io
 
