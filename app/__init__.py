@@ -52,7 +52,7 @@ def node_start_page():
     port_counter += 3
 
     # Start Node
-    if request.arg.get("new"):
+    if request.args.get("new"):
         os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
         os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
     else:
