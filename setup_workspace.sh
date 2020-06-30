@@ -40,7 +40,9 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt-get update
 
 # Install the latest version of PostgreSQL.
-# If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
 sudo apt-get install postgresql
 
 sudo pg_ctlcluster 12 main start
+
+# Create postgres user for current account
+sudo -u postgres createuser -s $(whoami);
