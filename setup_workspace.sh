@@ -49,10 +49,3 @@ sudo -u postgres createuser -s $(whoami)
 
 # Create user database
 createdb $(whoami)
-
-# Create postgres user for conseil
-psql "CREATE USER user WITH PASSWORD \'password\'"
-
-# Create user database for conseil
-createdb user
-
