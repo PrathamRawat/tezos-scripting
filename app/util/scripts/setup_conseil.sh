@@ -2,11 +2,9 @@
 
 docker pull cryptonomictech/conseil:latest
 
-docker rename conseil "conseil-$1"
-
 sudo -i -u postgres
 
-createdb "conseil-$1" --username="user" --password="password"
+createdb "conseil-$1" --username="user"
 
 psql "conseil-$1" -f data/conseil.sql
 
