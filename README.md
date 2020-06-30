@@ -1,12 +1,7 @@
 # tezos-scripting
 
-Dependencies: 
-- Screen
-- Python3
-- Some other stuff i need to put on here eventually
+Run `setup_workspace.sh` before doing anything, this will downoad tezos, and install its dependencies, along with those for Conseil, and any of the other features built into this tool.
 
-Can be installed as such:
-```shell script
-sudo apt-get install docker.io
-sudo apt-get install screen
-```
+This will ask for root privilege when running, which you should provice ONLY AFTER ENSURING THAT THE SCRIPT YOU ARE RUNNING IS DOING AS EXPECTED!
+
+After that, you can just run `start.sh` in the root directory of the project, and visit https://localhost:5000 to see the running UI.
