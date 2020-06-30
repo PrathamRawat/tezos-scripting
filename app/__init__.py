@@ -58,7 +58,7 @@ def node_start_page():
     else:
         os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
 
-    os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
 
     # Store node process statistics
     nodes[name]["status"] = "running"
