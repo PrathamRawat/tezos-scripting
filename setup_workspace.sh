@@ -45,7 +45,7 @@ sudo apt-get install postgresql
 sudo pg_ctlcluster 12 main start
 
 # Create postgres user for current account
-sudo -u postgres createuser -s $(whoami)
+sudo -u postgres createuser -s -r $(whoami)
 
 # Create user database
 createdb $(whoami)
