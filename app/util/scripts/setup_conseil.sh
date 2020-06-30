@@ -2,9 +2,9 @@
 
 docker pull cryptonomictech/conseil:latest
 
-psql -c "CREATE DATABASE conseil-$1"
+createdb "conseil_$1"
 
-psql "conseil-$1" -f data/conseil.sql
+psql "conseil_$1" -f data/conseil.sql
 
 #docker run -e XTZ_Host=localhost -e XTZ_Port="$2" -e XTZ_Network="$3" -e API_PORT="$4" -e DB_Database="conseil-$1" "conseil-$1" conseil-lorre
 
