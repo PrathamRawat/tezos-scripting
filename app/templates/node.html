@@ -11,8 +11,9 @@
     <br>
 
     Status: {{ node['status'] }} <br>
-    RPC Port: {{ node['rpc_port']}} <br>
-    P2P Port: {{ node['exposition_port']}} <br>
+    RPC Port: {{ node['rpc_port'] }} <br>
+    P2P Port: {{ node['exposition_port'] }} <br>
+    Conseil Port: {{ node['conseil_port'] }} <br>
 
     <h4>Actions</h4>
     {% if node['status'] == 'running' %}}
