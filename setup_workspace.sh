@@ -49,3 +49,5 @@ sudo -u postgres createuser -s -r $(whoami)
 
 # Create user database
 createdb $(whoami)
+
+./util/scripts/setup_arronax.sh
