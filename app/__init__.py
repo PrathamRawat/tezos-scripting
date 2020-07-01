@@ -47,9 +47,10 @@ def node_start_page():
     nodes[name]["rpc_port"] = port_counter
     nodes[name]["exposition_port"] = port_counter + 1
     nodes[name]["conseil_port"] = port_counter + 2
+    nodes[name]["arronax_port"] = port_counter + 3
     nodes[name]["network"] = str(request.args.get("network"))
     nodes[name]["status"] = "starting"
-    port_counter += 3
+    port_counter += 4
 
     # Start Node
     if request.args.get("new"):
@@ -59,6 +60,7 @@ def node_start_page():
         os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
 
     os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name + " " + str(nodes[name]["arronax_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]) + " " + str(nodes[name]["rpc_port"]))
 
     # Store node process statistics
     nodes[name]["status"] = "running"
@@ -72,8 +74,9 @@ def node_start_page():
 
 @app.route("/stop_node", methods=["GET"])
 def stop_node():
-    os.system(SCRIPT_FILE_PATH + 'stop_node.sh ' + request.args.get('name'))
-    os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get("name"))
+    os.system(SCRIPT_FILE_PATH + "stop_node.sh " + request.args.get('name'))
+    os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get('name'))
+    os.system(SCRIPT_FILE_PATH + "stop_arronax.sh " + request.args.get('name'))
     nodes[request.args.get("name")]['status'] = "stopped"
     return render_template("node.html", node=nodes[request.args.get('name')])
 
