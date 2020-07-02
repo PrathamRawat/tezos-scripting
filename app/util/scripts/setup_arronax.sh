@@ -6,7 +6,7 @@ git clone https://github.com/Cryptonomic/Arronax.git
 
 cd Arronax
 
-git checkout June-2020-release-9.1
+#git checkout master
 
 sed -i "s/EXPOSE 80/EXPOSE $2/g" Dockerfile
 
@@ -14,8 +14,7 @@ sed -i "s/listen 80;/listen $2;/g" default.conf
 
 touch src/config.tsx
 
-echo "
-import { Config } from './types';
+echo "import { Config } from './types';
 
 const configs: Config[] = [
   {
