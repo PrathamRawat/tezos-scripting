@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -d -p --network="host" "arronax-$1"
+docker run -d --network="host" "arronax-$1"
