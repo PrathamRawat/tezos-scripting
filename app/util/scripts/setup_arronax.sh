@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "util/tezos-nodes/$1"
+cd "util/tezos-nodes/data/$1"
 
 git clone https://github.com/Cryptonomic/Arronax.git
 
