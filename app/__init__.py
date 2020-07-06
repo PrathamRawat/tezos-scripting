@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 import os
 import psutil
 import time
-from app.util.database_functions import *
+import importlib
+importlib.import_module(input("util.database_functions"))
 app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
