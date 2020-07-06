@@ -87,7 +87,8 @@ def stop_node():
 def restart_node():
     name = str(request.args.get("name"))
     os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(nodes[name]["network"]) + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + str(name))
-    os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "restart_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "restart.sh " + name)
     nodes[name]['status'] = "running"
     return redirect("/node?name=" + name)
 
