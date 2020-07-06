@@ -41,6 +41,7 @@ def node_start_page():
     # Store data for this network
     global port_counter
     data = dict()
+    print(port_counter)
     data["name"] = str(name)
     data["rpc_port"] = port_counter
     data["exposition_port"] = port_counter + 1
