@@ -104,7 +104,5 @@ if __name__ == "__main__":
     app.debug = True
     app.run()
     setup_database()
-    global nodes
     nodes = get_all_nodes()
-    global port_counter
     port_counter = get_max_port()
