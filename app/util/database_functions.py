@@ -7,7 +7,7 @@ def setup_database():
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
     command = """CREATE TABLE IF NOT EXISTS 'nodes' (
-        name INTEGER PRIMARY KEY,
+        name VARCHAR PRIMARY KEY,
         rpc_port INTEGER,
         exposition_port INTEGER,
         conseil_port INTEGER,
@@ -17,6 +17,7 @@ def setup_database():
         );"""
     cursor.execute(command)
     database.commit()
+    print("Database Setup")
 
 
 def get_all_nodes():
@@ -50,7 +51,7 @@ def get_node_data(name):
 def add_node(data):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """INSERT INTO 'nodes' VALUES ({}, {}, {}, {}, {}, "{}", "{}");""".format(
+    command = """INSERT INTO 'nodes' VALUES ("{}", {}, {}, {}, {}, "{}", "{}");""".format(
         data["name"],
         data["rpc_port"],
         data['exposition_port'],
