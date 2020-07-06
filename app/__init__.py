@@ -57,7 +57,6 @@ def node_start_page():
     os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
     os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
     os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
-
     os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name)
 
     # Store node process statistics
@@ -84,7 +83,8 @@ def restart_node():
     name = str(request.args.get("name"))
     data = get_node_data(name)
     os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name))
-    os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name)
     update_status(name, "running")
     return redirect("/node?name=" + name)
 
