@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
 port_counter = 42069
-nodes = dict()
+nodes = list()
 SCRIPT_FILE_PATH = "./util/scripts/"
 
 
@@ -65,6 +65,9 @@ def node_start_page():
 
     # Store node process statistics
     data["status"] = "running"
+
+    global nodes
+    nodes.append(str(name))
 
     add_node(data)
 
