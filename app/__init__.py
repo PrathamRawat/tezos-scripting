@@ -3,7 +3,7 @@ import os
 import psutil
 import time
 import importlib
-importlib.import_module(input("util.database_functions"))
+importlib.import_module("util.database_functions")
 app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
