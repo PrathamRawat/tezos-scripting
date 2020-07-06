@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 import os
 import psutil
 import time
-import sqlite3
-
 import util.database_functions
 
 app = Flask(__name__)
