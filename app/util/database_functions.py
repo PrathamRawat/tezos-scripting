@@ -67,7 +67,7 @@ def add_node(data):
 def update_status(name, status):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """UPDATE nodes SET nodes.status={} WHERE nodes.name={};""".format(status, name)
+    command = """UPDATE nodes SET status="{}" WHERE name="{}";""".format(status, name)
     cursor.execute(command)
     database.commit()
 
@@ -77,6 +77,7 @@ def get_max_port():
     cursor = database.cursor()
     command = """SELECT MAX(arronax_port) FROM 'nodes';"""
     cursor.execute(command)
-    if not cursor.fetchone()[0]:
+    result = cursor.fetchone()
+    if result[0] == None:
         return 42069
-    return cursor.fetchone()[0]
+    return result[0]

@@ -105,7 +105,8 @@ def node_rpc_page():
 
 if __name__ == "__main__":
     setup_database()
-    nodes = get_all_nodes()
+    nodes = list(map(lambda node: node[0], get_all_nodes()))
     port_counter = get_max_port()
+    print(port_counter)
     app.debug = True
     app.run()
