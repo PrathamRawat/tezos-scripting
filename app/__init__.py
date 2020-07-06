@@ -101,8 +101,8 @@ def node_rpc_page():
 
 
 if __name__ == "__main__":
-    app.debug = True
-    app.run()
     setup_database()
     nodes = get_all_nodes()
     port_counter = get_max_port()
+    app.debug = True
+    app.run()
