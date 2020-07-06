@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
 port_counter = 42069
-nodes = dict()
+nodes = None
 SCRIPT_FILE_PATH = "./util/scripts/"
 
 
