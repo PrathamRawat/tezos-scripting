@@ -53,13 +53,9 @@ def node_start_page():
     port_counter += 4
 
     # Start Node
-    if request.args.get("new"):
-        os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name)
-        os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
-        os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
-    else:
-        os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name)
-
+    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name)
+    os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
+    os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
     os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
 
     os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name)
