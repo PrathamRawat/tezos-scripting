@@ -2,14 +2,13 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 import os
 import psutil
 import time
+from util.database_functions import *
 
 app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
 port_counter = 42069
-
-nodes = dict()
-
+nodes = list()
 SCRIPT_FILE_PATH = "./util/scripts/"
 
 
@@ -42,34 +41,30 @@ def node_start_page():
 
     # Store data for this network
     global port_counter
-    nodes[name] = dict()
-    nodes[name]["name"] = str(name)
-    nodes[name]["rpc_port"] = port_counter
-    nodes[name]["exposition_port"] = port_counter + 1
-    nodes[name]["conseil_port"] = port_counter + 2
-    nodes[name]["arronax_port"] = port_counter + 3
-    nodes[name]["network"] = str(request.args.get("network"))
-    nodes[name]["status"] = "starting"
+    data = dict()
+    print(port_counter)
+    data["name"] = str(name)
+    data["rpc_port"] = port_counter
+    data["exposition_port"] = port_counter + 1
+    data["conseil_port"] = port_counter + 2
+    data["arronax_port"] = port_counter + 3
+    data["network"] = str(request.args.get("network"))
+    data["status"] = "starting"
     port_counter += 4
 
     # Start Node
-    if request.args.get("new"):
-        os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
-        os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
-        os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(nodes[name]["arronax_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]) + " " + str(nodes[name]["rpc_port"]))
-    else:
-        os.system(SCRIPT_FILE_PATH + "restart_node.sh " + request.args.get("network") + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + name)
-
-    os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
-
+    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name)
+    os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
+    os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
+    os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
     os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name)
 
     # Store node process statistics
-    nodes[name]["status"] = "running"
-    # nodes[name]["pid"] = os.environ["node_pid"]
-    # nodes[name]["process"] = psutil.Process()
+    data["status"] = "running"
 
-    print(nodes)
+    nodes.append(str(name))
+
+    add_node(data)
 
     return redirect(url_for("start_page"))
 
@@ -79,32 +74,35 @@ def stop_node():
     os.system(SCRIPT_FILE_PATH + "stop_node.sh " + request.args.get('name'))
     os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get('name'))
     os.system(SCRIPT_FILE_PATH + "stop_arronax.sh " + request.args.get('name'))
-    nodes[request.args.get("name")]['status'] = "stopped"
-    return render_template("node.html", node=nodes[request.args.get('name')])
+    update_status(request.args.get('name'), "stopped")
+    return render_template("node.html", node=get_node_data(request.args.get("name")))
 
 
 @app.route("/restart_node", methods=['GET'])
 def restart_node():
     name = str(request.args.get("name"))
-    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(nodes[name]["network"]) + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["exposition_port"]) + " " + str(name))
-    os.system(SCRIPT_FILE_PATH + "restart_conseil.sh " + name + " " + str(nodes[name]["rpc_port"]) + " " + str(nodes[name]["network"]) + " " + str(nodes[name]["conseil_port"]))
-    os.system(SCRIPT_FILE_PATH + "restart.sh " + name)
-    nodes[name]['status'] = "running"
+    data = get_node_data(name)
+    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name))
+    os.system(SCRIPT_FILE_PATH + "restart_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
+    os.system(SCRIPT_FILE_PATH + "restart_arronax.sh " + name)
+    update_status(name, "running")
     return redirect("/node?name=" + name)
 
 
 @app.route("/node", methods=["GET"])
 def node_page():
-    return render_template("node.html", node=nodes[request.args.get("name")])
+    return render_template("node.html", node=get_node_data(request.args.get("name")))
 
 
 @app.route("/rpc", methods=['GET'])
 def node_rpc_page():
-    return render_template("rpc.html", node=nodes[request.args.get("name")])
+    return render_template("rpc.html", node=get_node_data(request.args.get("name")))
 
 
 if __name__ == "__main__":
+    setup_database()
+    nodes = list(map(lambda node: node[0], get_all_nodes()))
+    port_counter = get_max_port()
+    print(port_counter)
     app.debug = True
     app.run()
-
-
