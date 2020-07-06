@@ -80,13 +80,13 @@ def stop_node():
     os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get('name'))
     os.system(SCRIPT_FILE_PATH + "stop_arronax.sh " + request.args.get('name'))
     update_status(request.args.get('name'), "stopped")
-    return render_template("node.html", node=get_node_date(request.args.get("name")))
+    return render_template("node.html", node=get_node_data(request.args.get("name")))
 
 
 @app.route("/restart_node", methods=['GET'])
 def restart_node():
     name = str(request.args.get("name"))
-    data = get_node_date(name)
+    data = get_node_data(name)
     os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name))
     os.system(SCRIPT_FILE_PATH + "start_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
     update_status(name, "running")
@@ -95,12 +95,12 @@ def restart_node():
 
 @app.route("/node", methods=["GET"])
 def node_page():
-    return render_template("node.html", node=get_node_date(request.args.get("name")))
+    return render_template("node.html", node=get_node_data(request.args.get("name")))
 
 
 @app.route("/rpc", methods=['GET'])
 def node_rpc_page():
-    return render_template("rpc.html", node=get_node_date(request.args.get("name")))
+    return render_template("rpc.html", node=get_node_data(request.args.get("name")))
 
 
 if __name__ == "__main__":
