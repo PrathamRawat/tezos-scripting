@@ -70,7 +70,6 @@ def update_status(name, status):
 def get_max_port():
     command = """SELECT MAX(arronax_port) FROM 'nodes';"""
     cursor.execute(command)
-    try:
-        return cursor.fetchone()[0]
-    except:
+    if not cursor.fetchone()[0]:
         return 42069
+    return cursor.fetchone()[0]
