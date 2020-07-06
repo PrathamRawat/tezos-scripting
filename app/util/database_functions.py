@@ -50,7 +50,7 @@ def get_node_data(name):
 def add_node(data):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """INSERT INTO 'users' VALUES ({}, {}, {}, {}, {}, "{}", "{}");""".format(
+    command = """INSERT INTO 'nodes' VALUES ({}, {}, {}, {}, {}, "{}", "{}");""".format(
         data["name"],
         data["rpc_port"],
         data['exposition_port'],
