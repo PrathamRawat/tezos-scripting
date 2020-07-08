@@ -95,6 +95,7 @@ def delete_node():
     name = str(request.args.get("name"))
     os.system(SCRIPT_FILE_PATH + "delete_node.sh " + name)
     remove_node(name)
+    nodes.remove(name)
     return redirect("/")
 
 
