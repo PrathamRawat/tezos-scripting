@@ -49,11 +49,12 @@ def node_start_page():
     data["conseil_port"] = port_counter + 2
     data["arronax_port"] = port_counter + 3
     data["network"] = str(request.args.get("network"))
+    data["history_mode"] = str(request.args.get("mode"))
     data["status"] = "starting"
     port_counter += 4
 
     # Start Node
-    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name)
+    os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name + " " + str(data["history_mode"]))
     os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
     os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
     os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
@@ -82,7 +83,7 @@ def stop_node():
 def restart_node():
     name = str(request.args.get("name"))
     data = get_node_data(name)
-    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name))
+    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name) + " " + str(data["history_mode"]))
     os.system(SCRIPT_FILE_PATH + "restart_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
     os.system(SCRIPT_FILE_PATH + "restart_arronax.sh " + name)
     update_status(name, "running")

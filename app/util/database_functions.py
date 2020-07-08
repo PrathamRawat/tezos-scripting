@@ -13,6 +13,7 @@ def setup_database():
         conseil_port INTEGER,
         arronax_port INTEGER,
         network VARCHAR,
+        history_mode VARCHAR,
         status VARCHAR 
         );"""
     cursor.execute(command)
@@ -36,7 +37,8 @@ def result_to_dict(data):
     output['conseil_port'] = data[3]
     output['arronax_port'] = data[4]
     output['network'] = data[5]
-    output['status'] = data[6]
+    output['history_mode'] = data[6]
+    output['status'] = data[7]
     return output
 
 
@@ -51,13 +53,14 @@ def get_node_data(name):
 def add_node(data):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """INSERT INTO 'nodes' VALUES ("{}", {}, {}, {}, {}, "{}", "{}");""".format(
+    command = """INSERT INTO 'nodes' VALUES ("{}", {}, {}, {}, {}, "{}", "{}", "{}");""".format(
         data["name"],
         data["rpc_port"],
         data['exposition_port'],
         data["conseil_port"],
         data["arronax_port"],
         data["network"],
+        data["history_mode"],
         data["status"]
     )
     cursor.execute(command)
@@ -67,7 +70,7 @@ def add_node(data):
 def update_status(name, status):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """UPDATE nodes SET status="{}" WHERE name="{}";""".format(status, name)
+    command = """UPDATE 'nodes' SET status="{}" WHERE name="{}";""".format(status, name)
     cursor.execute(command)
     database.commit()
 
@@ -86,6 +89,6 @@ def get_max_port():
 def remove_node(name):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """DELETE FROM nodes WHERE name="{}";""".format(name)
+    command = """DELETE FROM 'nodes' WHERE name="{}";""".format(name)
     cursor.execute(command)
     database.commit()
