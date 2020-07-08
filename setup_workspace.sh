@@ -16,11 +16,11 @@ pip3 install psutil
 
 cd app
 
-./util/scripts/install_packages.sh
+#./util/scripts/install_packages.sh
 
 ./util/scripts/setup_tezos.sh
 
-./util/scripts/build_tezos.sh
+#./util/scripts/build_tezos.sh
 
 sudo apt-get install git
 
