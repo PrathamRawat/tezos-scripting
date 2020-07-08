@@ -67,7 +67,7 @@ def node_start_page():
 
     add_node(data)
 
-    return redirect(url_for("start_page"))
+    return redirect("/")
 
 
 @app.route("/stop_node", methods=["GET"])
