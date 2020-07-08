@@ -81,3 +81,11 @@ def get_max_port():
     if result[0] == None:
         return 42069
     return result[0]
+
+
+def remove_node(name):
+    database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
+    cursor = database.cursor()
+    command = """DELETE FROM nodes WHERE name="{}";""".format(name)
+    cursor.execute(command)
+    database.commit()

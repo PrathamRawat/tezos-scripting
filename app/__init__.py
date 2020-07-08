@@ -89,6 +89,14 @@ def restart_node():
     return redirect("/node?name=" + name)
 
 
+@app.route("/delete_node", methods=['GET'])
+def delete_node():
+    name = str(request.args.get("name"))
+    os.system(SCRIPT_FILE_PATH + "delete_node.sh " + name)
+    remove_node(name)
+    return redirect("/")
+
+
 @app.route("/node", methods=["GET"])
 def node_page():
     return render_template("node.html", node=get_node_data(request.args.get("name")))
