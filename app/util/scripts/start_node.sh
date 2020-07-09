@@ -4,7 +4,11 @@ cd "util"
 
 mkdir tezos-nodes
 
+cd tezos-nodes
+
 mkdir data
+
+cd data
 
 mkdir "$4"
 
