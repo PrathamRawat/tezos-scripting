@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd "util/tezos-nodes/data/"
+cd "../tezos-nodes/"
 
-mkdir "$4"
+mkdir "data/$4"
 
 if [ "$1" == "mainnet" ]; then
     docker run -d --network="host" --name "tezos-node-$4" tezos/tezos:mainnet tezos-node --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5"
