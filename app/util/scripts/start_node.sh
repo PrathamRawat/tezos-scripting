@@ -12,11 +12,11 @@ cd data
 
 mkdir "$4"
 
-if [ "$1" == "mainnet" ]; then
-    docker run -d --network="host" --name "tezos-node-$4" tezos/tezos:mainnet tezos-node --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5"
-else
-    docker run --network="host" --name "tezos-node-$4" tezos/tezos:mainnet tezos-node --cors-header='content-type' --cors-origin='*' --network "$1" --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5"
-fi
+#if [ "$1" == "mainnet" ]; then
+docker run -d --network="host" --name "tezos-node-$4" "tezos/tezos:$1" tezos-node --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5"
+#else
+#    docker run -d --network="host" --name "tezos-node-$4" tezos/tezos:carthagenet tezos-node --cors-header='content-type' --cors-origin='*' --network "$1" --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5"
+#fi
 
 #./tezos-node config --config-file ../tezos-nodes/config/"$4".json reset
 
