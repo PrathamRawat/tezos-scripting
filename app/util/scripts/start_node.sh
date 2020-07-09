@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "util/tezos-nodes/"
+cd "../tezos-nodes/"
 
 mkdir "data/$4"
 
