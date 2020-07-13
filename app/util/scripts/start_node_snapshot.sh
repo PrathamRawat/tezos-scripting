@@ -30,8 +30,8 @@ else
     fi
 fi
 
-docker run --rm -v "$PWD:~/node-data" -v "$PWD/img:/snapshot" "tezos/tezos:$1" tezos-snapshot-import --data-dir ~/node-data
+docker run --rm -v "$PWD:/node-data" -v "$PWD/img:/snapshot" "tezos/tezos:$1" tezos-snapshot-import --data-dir /node-data
 
-docker run -d -v "$PWD:~/node-data" --network="host" --name "tezos-node-$4" "tezos/tezos:$1" tezos-node --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5" --data-dir ~/node-data
+docker run -d -v "$PWD:/node-data" --network="host" --name "tezos-node-$4" "tezos/tezos:$1" tezos-node --cors-header='content-type' --cors-origin='*' --rpc-addr 127.0.0.1:"$2" --net-addr 127.0.0.1:"$3" --history-mode "$5" --data-dir /node-data
 
 rm img
