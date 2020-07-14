@@ -7,8 +7,10 @@ from util.database_functions import *
 app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
-port_counter = 42069
+port_counter = 50000
+# List of nodes running
 nodes = list()
+# Path to location of shell scripts
 SCRIPT_FILE_PATH = "./util/scripts/"
 
 
@@ -48,10 +50,11 @@ def node_start_page():
     data["exposition_port"] = port_counter + 1
     data["conseil_port"] = port_counter + 2
     data["arronax_port"] = port_counter + 3
+    data["postgres_port"] = port_counter + 4
     data["network"] = str(request.args.get("network"))
     data["history_mode"] = str(request.args.get("mode"))
     data["status"] = "starting"
-    port_counter += 4
+    port_counter += 5
 
     # Start Node
     if request.args.get("restore"):
@@ -84,7 +87,9 @@ def node_start_page():
 
     os.system(SCRIPT_FILE_PATH +
               "setup_conseil.sh " +
-              name
+              name +
+              " " +
+              str(data["postgres_port"])
               )
 
     os.system(SCRIPT_FILE_PATH +
@@ -96,7 +101,8 @@ def node_start_page():
               str(data["network"]) +
               " " +
               str(data["conseil_port"]) +
-              " " + str(data["rpc_port"])
+              " " +
+              str(data["rpc_port"])
               )
 
     os.system(SCRIPT_FILE_PATH +
@@ -107,7 +113,9 @@ def node_start_page():
               " " +
               str(data["network"]) +
               " " +
-              str(data["conseil_port"])
+              str(data["conseil_port"]) +
+              " " +
+              str(data["postgres_port"])
               )
 
     os.system(SCRIPT_FILE_PATH +
@@ -140,6 +148,11 @@ def stop_node():
 
     os.system(SCRIPT_FILE_PATH +
               "stop_arronax.sh " +
+              request.args.get('name')
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "stop_postgres.sh " +
               request.args.get('name')
               )
 
