@@ -55,13 +55,65 @@ def node_start_page():
 
     # Start Node
     if request.args.get("restore"):
-        os.system(SCRIPT_FILE_PATH + "start_node_snapshot.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name + " " + str(data["history_mode"]))
+
+        os.system(SCRIPT_FILE_PATH +
+                  "start_node_snapshot.sh " +
+                  request.args.get("network") +
+                  " " +
+                  str(data["rpc_port"]) +
+                  " " +
+                  str(data["exposition_port"]) +
+                  " " +
+                  name +
+                  " " +
+                  str(data["history_mode"])
+                  )
     else:
-        os.system(SCRIPT_FILE_PATH + "start_node.sh " + request.args.get("network") + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + name + " " + str(data["history_mode"]))
-    os.system(SCRIPT_FILE_PATH + "setup_conseil.sh " + name)
-    os.system(SCRIPT_FILE_PATH + "setup_arronax.sh " + name + " " + str(data["arronax_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]) + " " + str(data["rpc_port"]))
-    os.system(SCRIPT_FILE_PATH + "run_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
-    os.system(SCRIPT_FILE_PATH + "run_arronax.sh " + name)
+        os.system(SCRIPT_FILE_PATH +
+                  "start_node.sh " +
+                  request.args.get("network") +
+                  " " +
+                  str(data["rpc_port"]) +
+                  " " +
+                  str(data["exposition_port"]) +
+                  " " +
+                  name +
+                  " " +
+                  str(data["history_mode"])
+                  )
+
+    os.system(SCRIPT_FILE_PATH +
+              "setup_conseil.sh " +
+              name
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "setup_arronax.sh " +
+              name +
+              " " +
+              str(data["arronax_port"]) +
+              " " +
+              str(data["network"]) +
+              " " +
+              str(data["conseil_port"]) +
+              " " + str(data["rpc_port"])
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "run_conseil.sh " +
+              name +
+              " " +
+              str(data["rpc_port"]) +
+              " " +
+              str(data["network"]) +
+              " " +
+              str(data["conseil_port"])
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "run_arronax.sh " +
+              name
+              )
 
     # Store node process statistics
     data["status"] = "running"
@@ -75,9 +127,22 @@ def node_start_page():
 
 @app.route("/stop_node", methods=["GET"])
 def stop_node():
-    os.system(SCRIPT_FILE_PATH + "stop_node.sh " + request.args.get('name'))
-    os.system(SCRIPT_FILE_PATH + "stop_conseil.sh " + request.args.get('name'))
-    os.system(SCRIPT_FILE_PATH + "stop_arronax.sh " + request.args.get('name'))
+
+    os.system(SCRIPT_FILE_PATH +
+              "stop_node.sh " +
+              request.args.get('name')
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "stop_conseil.sh " +
+              request.args.get('name')
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "stop_arronax.sh " +
+              request.args.get('name')
+              )
+
     update_status(request.args.get('name'), "stopped")
     return render_template("node.html", node=get_node_data(request.args.get("name")))
 
@@ -86,16 +151,38 @@ def stop_node():
 def restart_node():
     name = str(request.args.get("name"))
     data = get_node_data(name)
-    os.system(SCRIPT_FILE_PATH + "restart_node.sh " + str(data["network"]) + " " + str(data["rpc_port"]) + " " + str(data["exposition_port"]) + " " + str(name) + " " + str(data["history_mode"]))
-    os.system(SCRIPT_FILE_PATH + "restart_conseil.sh " + name + " " + str(data["rpc_port"]) + " " + str(data["network"]) + " " + str(data["conseil_port"]))
-    os.system(SCRIPT_FILE_PATH + "restart_arronax.sh " + name)
+
+    os.system(SCRIPT_FILE_PATH +
+              "restart_node.sh " +
+              str(data["network"]) +
+              " " +
+              str(data["rpc_port"]) +
+              " " +
+              str(data["exposition_port"]) +
+              " " +
+              str(name) +
+              " " +
+              str(data["history_mode"])
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "restart_conseil.sh " +
+              name +
+              " " +
+              str(data["rpc_port"]) +
+              " " +
+              str(data["network"]) +
+              " " +
+              str(data["conseil_port"])
+              )
+
+    os.system(SCRIPT_FILE_PATH +
+              "restart_arronax.sh " +
+              name
+              )
+
     update_status(name, "running")
     return redirect("/node?name=" + name)
-
-
-# @app.route("/take_snapshot", methods=['GET'])
-# def take_snapshot():
-#
 
 
 @app.route("/delete_node", methods=['GET'])
