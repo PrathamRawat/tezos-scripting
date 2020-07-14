@@ -93,9 +93,11 @@ def restart_node():
     return redirect("/node?name=" + name)
 
 
-# @app.route("/take_snapshot", methods=['GET'])
-# def take_snapshot():
-#
+@app.route("/export_snapshot", methods=['GET'])
+def take_snapshot():
+    name = request.args.get("name")
+    os.system(SCRIPT_FILE_PATH + "export_node_snapshot.sh " + name)
+    return redirect("/node?name=" + name)
 
 
 @app.route("/delete_node", methods=['GET'])
