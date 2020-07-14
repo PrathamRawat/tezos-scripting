@@ -8,7 +8,9 @@ app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
 port_counter = 42069
+# List of nodes running
 nodes = list()
+# Path to location of shell scripts
 SCRIPT_FILE_PATH = "./util/scripts/"
 
 
