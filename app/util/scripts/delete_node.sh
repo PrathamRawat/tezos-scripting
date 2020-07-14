@@ -10,6 +10,6 @@ docker rm "tezos-node-$1"
 
 dropdb "conseil_$1"
 
-rm -rf "/util/tezos-nodes/data/$1"
+rm -rf "util/tezos-nodes/data/$1"
 
 #rm -f "/util/tezos-nodes/config/$1.json"

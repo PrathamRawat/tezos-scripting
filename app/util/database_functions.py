@@ -12,6 +12,7 @@ def setup_database():
         exposition_port INTEGER,
         conseil_port INTEGER,
         arronax_port INTEGER,
+        postgres_port INTEGER,
         network VARCHAR,
         history_mode VARCHAR,
         status VARCHAR 
@@ -36,9 +37,10 @@ def result_to_dict(data):
     output['exposition_port'] = data[2]
     output['conseil_port'] = data[3]
     output['arronax_port'] = data[4]
-    output['network'] = data[5]
-    output['history_mode'] = data[6]
-    output['status'] = data[7]
+    output['postgres_port'] = data[5]
+    output['network'] = data[6]
+    output['history_mode'] = data[7]
+    output['status'] = data[8]
     return output
 
 
@@ -53,12 +55,13 @@ def get_node_data(name):
 def add_node(data):
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """INSERT INTO 'nodes' VALUES ("{}", {}, {}, {}, {}, "{}", "{}", "{}");""".format(
+    command = """INSERT INTO 'nodes' VALUES ("{}", {}, {}, {}, {}, {}, "{}", "{}", "{}");""".format(
         data["name"],
         data["rpc_port"],
         data['exposition_port'],
         data["conseil_port"],
         data["arronax_port"],
+        data["postgres_port"],
         data["network"],
         data["history_mode"],
         data["status"]
@@ -78,11 +81,11 @@ def update_status(name, status):
 def get_max_port():
     database = sqlite3.connect(DATABASE_PATH)  # opens existing file or it makes new one if it does not exit
     cursor = database.cursor()
-    command = """SELECT MAX(arronax_port) FROM 'nodes';"""
+    command = """SELECT MAX(postgres_port) FROM 'nodes';"""
     cursor.execute(command)
     result = cursor.fetchone()
     if result[0] == None:
-        return 42069
+        return 50000
     return result[0]
 
 

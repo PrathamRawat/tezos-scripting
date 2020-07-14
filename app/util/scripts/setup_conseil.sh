@@ -2,13 +2,12 @@
 
 docker pull cryptonomictech/conseil:latest
 
-createdb "conseil_$1"
+docker pull postgres
 
-psql "conseil_$1" -f util/data/conseil.sql
+docker run -d --name "conseil-postgres-$1" -e POSTGRES_SUPERUSER="conseil" -e POSTGRES_PASSWORD="conseil" -e POSTGRES_DB="conseil" -p "$2:5432" postgres
 
-# Create postgres user for conseil
-psql -d "conseil_$1" -U $(whoami) -c "CREATE ROLE conseil WITH LOGIN SUPERUSER CREATEDB PASSWORD 'conseil';"
+sleep 5s
 
-#docker run -e XTZ_Host=localhost -e XTZ_Port="$2" -e XTZ_Network="$3" -e API_PORT="$4" -e DB_Database="conseil-$1" "conseil-$1" conseil-lorre
+docker cp "./util/data/conseil.sql" "conseil-postgres-$1:/conseil.sql"
 
-#docker run -e XTZ_Host=localhost -e XTZ_Port="$2" -e XTZ_Network="$3" -e API_PORT="$4" -e DB_Database="conseil-$1" "conseil-$1" "conseil-$1" conseil-api
+docker exec -u postgres "conseil-postgres-$1" psql conseil -f "/conseil.sql"
