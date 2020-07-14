@@ -7,7 +7,7 @@ from util.database_functions import *
 app = Flask(__name__)
 
 # Counter for ports to use when starting new nodes
-port_counter = 42069
+port_counter = 50000
 # List of nodes running
 nodes = list()
 # Path to location of shell scripts
